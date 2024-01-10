@@ -67,3 +67,15 @@
     package:
       name: samba
       state: latest
+
+  - name: Install nfs (Rocky)
+    dnf:
+      name: nfs-utils
+      state: latest
+    when: ansible_distribution == "Rocky"
+
+  - name: Install nfs (Ubuntu)
+    apt:
+      name: nfs-kernel-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
