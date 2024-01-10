@@ -1,0 +1,29 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update Repository index
+    apt:
+      update_cache: yes
+     when: ansible_distribution == "ubuntu"
+
+  - name: Install Apache
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == "ubuntu"
+
+  - name: Add php support for Apache
+    apt:
+      name: libapache2-mod-php
+      state: latest
+     when: ansible_distribution == "ubuntu"
+
+  - name: Add Htop
+    apt:
+      name: htop
+      state: latest
+     when: ansible_distribution == "ubuntu"
+

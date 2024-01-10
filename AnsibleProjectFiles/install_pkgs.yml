@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+
+#The first plays for apache
+
+  - name: Install Apache, PHP Support and Htop
+    package:
+      update_cache: yes
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_support }}"
+        - "{{ hiop_package }}"
+      state: latest
