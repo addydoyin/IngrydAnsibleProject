@@ -22,8 +22,9 @@
     user:
       name: oga
       group: root
+      shell: /bin/bash
 
-  - name: Add ss key for oga
+  - name: Add ssh key for oga
     tags: always
     authorized_key:
       user: oga
@@ -32,7 +33,7 @@
   - name: Add a sudoers file for oga
     tags: always
     copy:
-        src: sudoer_oga
+      src: sudoer_oga
       dest: /etc/sudoers.d/oga
       owner: root
       group: root
@@ -47,9 +48,9 @@
   - name: Install Apache, PHP support and Htop
     tags: apache,apache2,web_server,ubuntu
     apt:
-     name:
-      - apache2
-      - libapache2-mod-php
+      name:
+        - apache2
+        - libapache2-mod-php
     when: ansible_distribution == "Ubuntu"
 
   - name: Install Apache, PHP support and Htop
