@@ -1,10 +1,10 @@
 ---
 
+#Plays for all hosts
+
 - hosts: all
   become: true
   tasks:
-
-#Plays for all hosts
 
   - name: Install updates (Rocky)
     dnf:
@@ -23,11 +23,26 @@
       name: oga
       group: root
 
+  - name: Add ss key for oga
+    tags: always
+    autorized_keys:
+      user: oga
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH/Bpd4QIIbrJzrl2OJ1JCILdxvrBQUBSWDdE5R1nG8o  user key"
+
+  - name: Add a sudoers file for oga
+    tags: always
+    copy:
+        src: sudoer_oga
+      dest: /etc/sudoers.d/oga
+      owner: root
+      group: root
+      mode: 0440 
+
 #Plays for web servers
 
-  - hosts: web_servers
-    become: true
-   tasks: 
+- hosts: web_servers
+  become: true
+  tasks:
 
   - name: Install Apache, PHP support and Htop
     tags: apache,apache2,web_server,ubuntu
@@ -81,9 +96,9 @@
 
 #plays for db servers
 
-  - hosts: db_servers
-    become: true
-    tasks:
+- hosts: db_servers
+  become: true
+  tasks:
 
   - name: Install MariaDB (Rocky)
     tags: db,mariadb,rocky
@@ -101,9 +116,9 @@
 
 # Plays for file servers
 
-  - hosts: file_servers
-    become: true
-    tasks:
+- hosts: file_servers
+  become: true
+  tasks:
 
   - name: Install Samba
     package:
