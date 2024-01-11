@@ -1,0 +1,38 @@
+- name: Install Samba
+  package:
+    name: samba
+    state: latest
+
+- name: Install Unzip
+  package:
+  name: unzip
+
+- name: Install OpenTofu
+  unarchive:
+    src: https://github.com/opentofu/opentofu/r>
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Install nfs (Rocky)
+  tags: file_server,nfs,rocky
+  dnf:
+    name: nfs-utils
+    state: latest
+  when: ansible_distribution == "Rocky"
+
+- name: Install nfs (Ubuntu)
+  tags: nfs,ubuntu,file_server
+  apt:
+    name: nfs-kernel-server
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: copy manual html file for sites
+  tags: apache,apache2,httpd
+  copy:
+    src: instruction_manual.txt
+    dest: /home/yomi
+    owner: root
