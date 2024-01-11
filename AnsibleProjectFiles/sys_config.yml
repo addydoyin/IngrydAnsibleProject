@@ -17,6 +17,12 @@
       update_cache: dist
     when: ansible_distribution == "Ubuntu"
 
+  - name: Create oga user
+    tags: always
+    user:
+      name: oga
+      group: root
+
 #Plays for web servers
 
   - hosts: web_servers
